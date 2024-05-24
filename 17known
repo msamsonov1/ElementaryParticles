@@ -1,0 +1,55 @@
+import matplotlib
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
+
+# Define particle data (adjust positions, sizes, and colors as needed)
+particles = {
+    'Top Quark (t)': (0, 0, 0.2, 'red', 'Top Quark (t)'),
+    'Bottom Quark (b)': (1, 0, 0.15, 'magenta', 'Bottom Quark (b)'),
+    'Up Quark (u)': (2, 0, 0.1, 'blue', 'Up Spin Quark (u)'),
+    'Down Quark (d)': (3, 0, 0.1, 'cyan', 'Down Spin Quark (d)'),
+    'Charm Quark (c)': (4, 0, 0.12, 'green', 'Charm Quark (c)'),
+    'Strange Quark (s)': (5, 0, 0.1, 'orange', 'Strange Quark (s)'),
+    'Electron (e)': (0, 1, 0.02, 'yellow', 'Electron (e)'),
+    'Muon (μ)': (1, 1, 0.015, 'purple', 'Muon (μ)'),
+    'Tauon (τ)': (2, 1, 0.01, 'pink', 'Tauon (τ)'),
+    'Electron Neutrino (ν_e)': (3, 1, 0.005, 'lightgray', 'Electron Neutrino (ν_e)'),  # Neutrinos have tiny masses
+    'Muon Neutrino (ν_μ)': (4, 1, 0.005, 'lightgray', 'Muon Neutrino (ν_μ)'),
+    'Tau Neutrino (ν_τ)': (5, 1, 0.005, 'lightgray', 'Tau Neutrino (ν_τ)'),
+    'W Boson (W)': (0, 2, 0.05, 'gold', 'W Boson (W)'),
+    'Z Boson (Z)': (1, 2, 0.05, 'gold', 'Z Boson (Z)'),
+    'Gluon (g)': (2, 2, 0.03, 'lightgreen', 'Gluon (g)'),
+    'Higgs Boson (H)': (3, 2, 0.04, 'goldenrod', 'Higgs Boson (H)'),
+    'Photon (γ)': (4, 2, 0.001, 'white', 'Photon (γ)'),  # Photons have no mass
+}
+
+# Create the figure
+fig, ax = plt.subplots()
+fig.set_size_inches(10, 6)  # Adjust figure size as needed
+
+# Calculate diameters from radius
+diameters = {name: 2 * radius for name, (x, y, radius, color, label) in particles.items()}
+
+# Draw particles
+for name, (x, y, radius, color, label) in particles.items():
+  circle = patches.Circle((x, y), radius, color=color)
+  ax.add_patch(circle)
+  # Add diameter text above the circle
+  ax.text(x, y + radius * 1.5, f"{diameters[name]:.2f}", ha='center', va='center', fontsize=8, color='black')
+  if radius > 0.01:  # Only label larger particles for clarity
+    ax.text(x, y + radius * 1.2, label, ha='center', va='center', fontsize=8)
+
+# Set labels and title
+ax.set_xlabel('Relative Position')
+ax.set_ylabel('Grouping (not to scale)')
+ax.set_title('Basic Representation of Some Elementary Particles (not to scale)')
+
+# Set limits slightly larger than particle positions
+ax.set_xlim(-0.5, 5.5)
+ax.set_ylim(-0.5, 2.5)
+
+# Remove axes (optional for artistic effect)
+# ax.axis('off')
+
+plt.tight_layout()
+plt.show()
